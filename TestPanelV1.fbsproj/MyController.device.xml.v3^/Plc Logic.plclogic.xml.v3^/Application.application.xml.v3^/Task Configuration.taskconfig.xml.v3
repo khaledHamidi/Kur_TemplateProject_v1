@@ -1,0 +1,49 @@
+__V3_META__
+{
+  "objectGuid": "eb6b80a6-ceca-436e-bc2f-5f15275676ff",
+  "objectTypeGuid": "ae1de277-a207-4a28-9efb-456c06bd52f3",
+  "embeddedObjectTypeGuids": [],
+  "properties": {},
+  "subObjects": {}
+}
+__V3_CONTENT__
+<?xml version="1.0" encoding="utf-8"?>
+<Single xml:space="preserve" Type="{ae1de277-a207-4a28-9efb-456c06bd52f3}" Method="IArchivable">
+  <Single Name="StackSize" Type="uint">0</Single>
+  <Single Name="UseConfigurableStackSize" Type="bool">False</Single>
+  <List Name="TaskConfigurationList" Type="{75fc8bb3-c744-4e99-b6eb-bb2796e19500}" />
+  <List Name="SystemEventList" Type="{7be1d5a4-d68c-4bc6-a7e5-e42a0ab42a09}" />
+  <Null Name="ExternalEventList" />
+  <Single Name="enum_guid" Type="System.Guid">b3a86f69-2b5d-53a0-9187-a2db24da16e5</Single>
+  <Single Name="jitter_distribution_guid" Type="System.Guid">ddf88878-aadc-5789-bb91-1662fa46a152</Single>
+  <Single Name="task_struct_guid" Type="System.Guid">eeadf8dd-b765-5c73-a9c9-d28268407cff</Single>
+  <Single Name="task_config_info_guid" Type="System.Guid">60bb994c-741d-5112-a614-0ce418bb309f</Single>
+  <Single Name="task_global_vars_guid" Type="System.Guid">8d29208c-d2ac-522c-aec6-526aeb502050</Single>
+  <Single Name="setup_call_pou_guid" Type="System.Guid">8a296b9c-8762-52a9-895d-f38acd715211</Single>
+  <Single Name="sys_setup_pou_guid" Type="System.Guid">49417868-d883-5f5b-b027-a18a5b002cec</Single>
+  <Single Name="profiler_global_vars_guid" Type="System.Guid">f4f44d9d-6a76-561a-a39f-b0a2d5a913b2</Single>
+  <Single Name="profiler_init_code_guid" Type="System.Guid">ae3c7ba0-3627-508e-9c8b-e648517a61be</Single>
+  <Single Name="profiler_cycle_code_guid" Type="System.Guid">41a16951-7a4c-5165-89ff-d9eb50746969</Single>
+  <Single Name="profiler_fb_guid" Type="System.Guid">b32cbb4e-8ba1-5876-afa2-efb9641fc88d</Single>
+  <Single Name="profiler_method_reset_guid" Type="System.Guid">c1426591-4f2b-5e69-bffa-9098ae5eeed7</Single>
+  <Single Name="profiler_method_starttiming_guid" Type="System.Guid">6c2fc2dc-b24c-5987-bf56-63d1b278bde4</Single>
+  <Single Name="profiler_method_stoptiming_guid" Type="System.Guid">cd8a8041-d913-5fe3-bc62-27dc01cea124</Single>
+  <Single Name="profiler_iectaskgetprofiling_guid" Type="System.Guid">c05e12d5-4944-56ed-b608-704cb3879118</Single>
+  <Null Name="alSysEventList" />
+  <List2 Name="alTaskGroups">
+    <Single Type="{609a42d4-f974-4041-8548-f80e229ca5ed}" Method="IArchivable">
+      <Single Name="Groupname" Type="string">IEC-Tasks</Single>
+      <Single Name="Core" Type="int">-2</Single>
+      <Single Name="DefaultGroup" Type="bool">True</Single>
+      <Single Name="Editable" Type="bool">False</Single>
+    </Single>
+  </List2>
+  <Single Name="sysevents_global_vars_guid" Type="System.Guid">3b63acc6-9319-55b0-b318-fb8af8e2b233</Single>
+  <Single Name="sysevents_functionsblock_guid" Type="System.Guid">7c97ae5f-fe1d-5b1d-a417-78dd6d7f27a9</Single>
+  <Single Name="sysevents_fbinit_method_guid" Type="System.Guid">c508a29b-c8a5-5707-afda-047873232e16</Single>
+  <Single Name="sysevents_fbexit_method_guid" Type="System.Guid">63fbadc7-3ac3-5c3a-b852-724f06797c99</Single>
+  <Single Name="sysevents_eventcallback_method_guid" Type="System.Guid">8d1ea946-c400-5382-8e5a-bdcb57d24b27</Single>
+  <Single Name="sysevents_resetget_property_guid" Type="System.Guid">dbee2a60-54ea-5e56-8393-ed37fbe4a45f</Single>
+  <Array Name="parent_tasks" Type="System.Guid" />
+  <Single Name="device_app" Type="System.Guid">00000000-0000-0000-0000-000000000000</Single>
+</Single>

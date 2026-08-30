@@ -1,0 +1,26 @@
+__METADATA__
+{
+  "v3Meta": {
+    "objectGuid": "d533771d-ee17-48b7-9ef2-bdcf79c0baee",
+    "objectTypeGuid": "ffbfa93a-b94d-45fc-a329-229860183b1d",
+    "embeddedObjectTypeGuids": [
+      "a9ed5b7e-75c5-4651-af16-d2c27e98cb94"
+    ],
+    "properties": {},
+    "subObjects": {}
+  }
+}
+__DECLARATION__
+VAR_GLOBAL
+
+    // ---------- ALARMS ----------
+    Alarms      : AlarmSystem;
+
+    // ---------- DATE / TIME ----------
+    Clock       : TimeData;
+    TimeRead    : BOOL;     // <- HMI button "Load"
+    TimeWrite   : BOOL;     // <- HMI button "Apply"
+
+	// --------- SYSTEM --------------
+	Machine		: MachineStatus;
+END_VAR

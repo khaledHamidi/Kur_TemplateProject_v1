@@ -1,0 +1,1682 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0200">
+  <fileHeader companyName="" productName="Machine Expert Logic Builder" productVersion="V25.0.24.0" creationDateTime="2026-08-29T10:46:10.3246713" />
+  <contentHeader name="Template Project" version="0.0.0.1" modificationDateTime="2026-08-29T10:13:25.577481" organization="Kur otomasyon" author="Khaled HAMIDI">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="1" y="1" />
+      </fbd>
+      <ld>
+        <scaling x="1" y="1" />
+      </ld>
+      <sfc>
+        <scaling x="1" y="1" />
+      </sfc>
+    </coordinateInfo>
+    <addData>
+      <data name="http://www.3s-software.com/plcopenxml/projectinformation" handleUnknown="implementation">
+        <ProjectInformation>
+          <property name="Author" type="string">Khaled HAMIDI</property>
+          <property name="Company" type="string">Kur otomasyon</property>
+          <property name="Description" type="string" />
+          <property name="Git:IsGitManaged" type="boolean">false</property>
+          <property name="Project" type="string">Automation Lab V1</property>
+          <property name="Svn:IsSvnManaged" type="boolean">false</property>
+          <property name="Title" type="string">Template Project</property>
+          <property name="Version" type="version">0.0.0.1</property>
+        </ProjectInformation>
+      </data>
+    </addData>
+  </contentHeader>
+  <types>
+    <dataTypes />
+    <pous />
+  </types>
+  <instances>
+    <configurations />
+  </instances>
+  <addData>
+    <data name="http://www.3s-software.com/plcopenxml/application" handleUnknown="implementation">
+      <resource name="Application">
+        <task name="MAST" interval="PT0.01S" priority="15">
+          <pouInstance name="SR_Main" typeName="">
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml" />
+            </documentation>
+          </pouInstance>
+          <addData>
+            <data name="http://www.3s-software.com/plcopenxml/tasksettings" handleUnknown="implementation">
+              <TaskSettings KindOfTask="Cyclic" Interval="10" IntervalUnit="ms" WithinSPSTimeSlicing="true">
+                <Watchdog Enabled="true" Time="50" TimeUnit="ms" Sensitivity="1" />
+              </TaskSettings>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+              <ObjectId>7688d58b-1ded-4d69-9377-67c912740fa7</ObjectId>
+            </data>
+          </addData>
+        </task>
+        <globalVars name="GVL_IO">
+          <variable name="StartButton_In">
+            <type>
+              <BOOL />
+            </type>
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml"> ---------- DIGITAL INPUTS ----------
+ Buttons </xhtml>
+            </documentation>
+          </variable>
+          <variable name="StopButton_In">
+            <type>
+              <BOOL />
+            </type>
+          </variable>
+          <variable name="ResetButton_In">
+            <type>
+              <BOOL />
+            </type>
+          </variable>
+          <variable name="Emergency_In">
+            <type>
+              <BOOL />
+            </type>
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml"> NC contact -&gt; TRUE = OK</xhtml>
+            </documentation>
+          </variable>
+          <variable name="ManualMode_Sw">
+            <type>
+              <BOOL />
+            </type>
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml"> Switchs </xhtml>
+            </documentation>
+          </variable>
+          <variable name="AutoMode_Sw">
+            <type>
+              <BOOL />
+            </type>
+          </variable>
+          <variable name="RunLamp_Out">
+            <type>
+              <BOOL />
+            </type>
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml"> ---------- DIGITAL OUTPUTS ----------
+ Lamp </xhtml>
+            </documentation>
+          </variable>
+          <variable name="ReadyLamp_Out">
+            <type>
+              <BOOL />
+            </type>
+          </variable>
+          <variable name="AlarmLamp_Out">
+            <type>
+              <BOOL />
+            </type>
+          </variable>
+          <variable name="MasterAxis">
+            <type>
+              <derived name="MOIN.FB_ControlledAxis" />
+            </type>
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml"> ---------- VIRTUAL MASTER ----------</xhtml>
+            </documentation>
+          </variable>
+          <variable name="MainChain">
+            <type>
+              <derived name="MOIN.FB_ControlledAxis" />
+            </type>
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml"> DRV1</xhtml>
+            </documentation>
+          </variable>
+          <variable name="Conveyor">
+            <type>
+              <derived name="MOIN.FB_ControlledAxis" />
+            </type>
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml"> DRV2</xhtml>
+            </documentation>
+          </variable>
+          <variable name="CutterAxis">
+            <type>
+              <derived name="MOIN.FB_ControlledAxis" />
+            </type>
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml"> DRV3</xhtml>
+            </documentation>
+          </variable>
+          <addData>
+            <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+              <InterfaceAsPlainText>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">VAR_GLOBAL
+	
+    // ---------- DIGITAL INPUTS ----------
+	(* Buttons *)
+    StartButton_In      : BOOL;
+    StopButton_In       : BOOL;
+    ResetButton_In      : BOOL;
+    Emergency_In        : BOOL;     // NC contact -&gt; TRUE = OK
+	
+	(* Switchs *)
+	ManualMode_Sw			: BOOL;
+	AutoMode_Sw				: BOOL;			
+
+    // ---------- DIGITAL OUTPUTS ----------
+    (* Lamp *)
+	RunLamp_Out       	: BOOL;
+	ReadyLamp_Out		: BOOL;
+    AlarmLamp_Out       : BOOL;
+
+
+    // ---------- VIRTUAL MASTER ----------
+    MasterAxis  : MOIN.FB_ControlledAxis;
+
+    // ---------- REAL AXES ----------
+    MainChain   : MOIN.FB_ControlledAxis;   // DRV1
+    Conveyor    : MOIN.FB_ControlledAxis;   // DRV2
+    CutterAxis  : MOIN.FB_ControlledAxis;   // DRV3
+
+END_VAR</xhtml>
+              </InterfaceAsPlainText>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+              <ObjectId>2db6a205-aca8-494a-bd3e-b43a3bd5355f</ObjectId>
+            </data>
+          </addData>
+        </globalVars>
+        <globalVars name="GVL_System">
+          <variable name="Alarms">
+            <type>
+              <derived name="AlarmSystem" />
+            </type>
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml"> ---------- ALARMS ----------</xhtml>
+            </documentation>
+          </variable>
+          <variable name="Clock">
+            <type>
+              <derived name="TimeData" />
+            </type>
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml"> ---------- DATE / TIME ----------</xhtml>
+            </documentation>
+          </variable>
+          <variable name="TimeRead">
+            <type>
+              <BOOL />
+            </type>
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml"> &lt;- HMI button "Load"</xhtml>
+            </documentation>
+          </variable>
+          <variable name="TimeWrite">
+            <type>
+              <BOOL />
+            </type>
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml"> &lt;- HMI button "Apply"</xhtml>
+            </documentation>
+          </variable>
+          <variable name="Machine">
+            <type>
+              <derived name="MachineStatus" />
+            </type>
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml"> --------- SYSTEM --------------</xhtml>
+            </documentation>
+          </variable>
+          <addData>
+            <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+              <InterfaceAsPlainText>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">VAR_GLOBAL
+
+    // ---------- ALARMS ----------
+    Alarms      : AlarmSystem;
+
+    // ---------- DATE / TIME ----------
+    Clock       : TimeData;
+    TimeRead    : BOOL;     // &lt;- HMI button "Load"
+    TimeWrite   : BOOL;     // &lt;- HMI button "Apply"
+
+	// --------- SYSTEM --------------
+	Machine		: MachineStatus;
+END_VAR</xhtml>
+              </InterfaceAsPlainText>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+              <ObjectId>d533771d-ee17-48b7-9ef2-bdcf79c0baee</ObjectId>
+            </data>
+          </addData>
+        </globalVars>
+        <globalVars name="GVL_Recipe">
+          <variable name="IS_DEBUG">
+            <type>
+              <BOOL />
+            </type>
+            <initialValue>
+              <simpleValue value="TRUE" />
+            </initialValue>
+          </variable>
+          <addData>
+            <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+              <InterfaceAsPlainText>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">VAR_GLOBAL
+	
+	IS_DEBUG: BOOL := TRUE;	
+END_VAR</xhtml>
+              </InterfaceAsPlainText>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+              <ObjectId>b585f6bb-018b-4ec6-bac6-8267a70fe936</ObjectId>
+            </data>
+          </addData>
+        </globalVars>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/datatype" handleUnknown="implementation">
+            <dataType name="TimeData">
+              <baseType>
+                <struct>
+                  <variable name="Act">
+                    <type>
+                      <derived name="SysTimeRtc.SYSTIMEDATE" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> -&gt; HMI display</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="Set">
+                    <type>
+                      <derived name="SysTimeRtc.SYSTIMEDATE" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> &lt;- HMI edit fields</xhtml>
+                    </documentation>
+                  </variable>
+                </struct>
+              </baseType>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">// TimeDate is not DateTime becouse its in usage.
+TYPE TimeData :
+STRUCT
+    Act : SysTimeRtc.SYSTIMEDATE;   // -&gt; HMI display
+    Set : SysTimeRtc.SYSTIMEDATE;   // &lt;- HMI edit fields
+END_STRUCT
+END_TYPE</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>dbaef4ad-4e24-48c5-acde-bc5817a804c4</ObjectId>
+                </data>
+              </addData>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> TimeDate is not DateTime becouse its in usage.</xhtml>
+              </documentation>
+            </dataType>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/datatype" handleUnknown="implementation">
+            <dataType name="MachineStatus">
+              <baseType>
+                <struct>
+                  <variable name="Power">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> is power OK</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="Home">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> is home</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="ManualMode">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> NOT Auto</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="AutoMode">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> auto / manual selector</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="ResetRequest">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> true if reset requert</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="StopRequest">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="SafetyOk">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> emergency + doors</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="BusOk">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> fieldbus ready</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="PowerOk">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> all drives powered</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="HomeOk">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> all axes homed</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="AxisOk">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> all axes no error</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="Ready">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> all above + no alarm</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="Running">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> machine running</xhtml>
+                    </documentation>
+                  </variable>
+                </struct>
+              </baseType>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">TYPE MachineStatus :
+STRUCT
+    // ---- COMMAND : HMI writes ----
+    Power       : BOOL;     // is power OK
+    Home        : BOOL;     // is home
+    ManualMode      : BOOL;     // NOT Auto
+	AutoMode        : BOOL;     // auto / manual selector
+
+	ResetRequest	:BOOL;	// true if reset requert
+	StopRequest		:BOOL; 
+    // ---- STATUS : PLC writes ----
+    SafetyOk    : BOOL;     // emergency + doors
+    BusOk       : BOOL;     // fieldbus ready
+    PowerOk     : BOOL;     // all drives powered
+    HomeOk      : BOOL;     // all axes homed
+    AxisOk      : BOOL;     // all axes no error
+    Ready       : BOOL;     // all above + no alarm
+
+    Running     : BOOL;     // machine running
+END_STRUCT
+END_TYPE</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>18996c06-7400-4a57-9915-b37ba9fb1618</ObjectId>
+                </data>
+              </addData>
+            </dataType>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/datatype" handleUnknown="implementation">
+            <dataType name="hmi_table">
+              <baseType>
+                <struct />
+              </baseType>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">(*
+========================================
+  HMI VARIABLE LIST
+========================================
+
+--- READ ---
+Machine.Ready
+Machine.Running
+Machine.SafetyOk
+Machine.PowerOk
+Machine.HomeOk
+
+Alarms.Active
+Alarms.Count
+Alarms.ActiveList[1..20]
+
+Clock.Act.wDay
+Clock.Act.wMonth
+Clock.Act.wYear
+Clock.Act.wHour
+Clock.Act.wMinute
+Clock.Act.wSecond
+
+
+--- WRITE ---
+Machine.Auto
+Machine.Power
+Machine.Home
+
+Clock.Set.wDay
+Clock.Set.wMonth
+Clock.Set.wYear
+Clock.Set.wHour
+Clock.Set.wMinute
+Clock.Set.wSecond
+
+TimeRead        // button "Load"
+TimeWrite       // button "Apply"
+
+
+========================================
+  TIME CHANGE
+========================================
+1. press "Load"     -&gt; Clock.Set = Clock.Act
+2. edit Clock.Set fields
+3. press "Apply"    -&gt; written to RTC
+
+*)
+
+TYPE hmi_table :
+STRUCT
+   
+END_STRUCT
+END_TYPE</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>49aa2bbf-06c1-46a8-a83f-0e6543e2a3f0</ObjectId>
+                </data>
+              </addData>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">
+========================================
+  HMI VARIABLE LIST
+========================================
+
+--- READ ---
+Machine.Ready
+Machine.Running
+Machine.SafetyOk
+Machine.PowerOk
+Machine.HomeOk
+
+Alarms.Active
+Alarms.Count
+Alarms.ActiveList[1..20]
+
+Clock.Act.wDay
+Clock.Act.wMonth
+Clock.Act.wYear
+Clock.Act.wHour
+Clock.Act.wMinute
+Clock.Act.wSecond
+
+
+--- WRITE ---
+Machine.Auto
+Machine.Power
+Machine.Home
+
+Clock.Set.wDay
+Clock.Set.wMonth
+Clock.Set.wYear
+Clock.Set.wHour
+Clock.Set.wMinute
+Clock.Set.wSecond
+
+TimeRead        // button "Load"
+TimeWrite       // button "Apply"
+
+
+========================================
+  TIME CHANGE
+========================================
+1. press "Load"     -&gt; Clock.Set = Clock.Act
+2. edit Clock.Set fields
+3. press "Apply"    -&gt; written to RTC
+
+</xhtml>
+              </documentation>
+            </dataType>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="SR_Main" pouType="program">
+              <interface />
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">DateTime();
+
+Main._01_DefineButtons();
+Main._02_DefineAlarms();
+Main._03_MachineControl();
+Main();
+</xhtml>
+                </ST>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM SR_Main
+VAR
+END_VAR
+</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>c2204bf7-cece-49f1-bedd-18c4f10c0357</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="Button" pouType="functionBlock">
+              <interface>
+                <inputVars>
+                  <variable name="Signal">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Giriş sinyali</xhtml>
+                    </documentation>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK Button
+
+VAR_INPUT
+    Signal : BOOL;        // Giriş sinyali
+END_VAR
+
+VAR_OUTPUT
+    State      : BOOL;    // Anlık buton durumu
+    Pressed    : BOOL;    // Basılma olayı (0 -&gt; 1)
+    Released  : BOOL;    // Bırakılma olayı (1 -&gt; 0)
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </inputVars>
+                <outputVars>
+                  <variable name="State">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Anlık buton durumu</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="Pressed">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Basılma olayı (0 -&gt; 1)</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="Released">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Bırakılma olayı (1 -&gt; 0)</xhtml>
+                    </documentation>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK Button
+
+VAR_INPUT
+    Signal : BOOL;        // Giriş sinyali
+END_VAR
+
+VAR_OUTPUT
+    State      : BOOL;    // Anlık buton durumu
+    Pressed    : BOOL;    // Basılma olayı (0 -&gt; 1)
+    Released  : BOOL;    // Bırakılma olayı (1 -&gt; 0)
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </outputVars>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">// Rising edge 0 -&gt; 1
+Pressed := Signal AND NOT State;
+
+// Falling edge 1 -&gt; 0
+Released := NOT Signal AND State;
+
+// Save Current state
+State := Signal;</xhtml>
+                </ST>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK Button
+
+VAR_INPUT
+    Signal : BOOL;        // Giriş sinyali
+END_VAR
+
+VAR_OUTPUT
+    State      : BOOL;    // Anlık buton durumu
+    Pressed    : BOOL;    // Basılma olayı (0 -&gt; 1)
+    Released  : BOOL;    // Bırakılma olayı (1 -&gt; 0)
+END_VAR</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>7cb82e55-98e1-46ed-ad94-f4039b415cdd</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="Emergency" pouType="functionBlock">
+              <interface>
+                <inputVars>
+                  <variable name="Signal">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK Emergency
+
+VAR_INPUT
+    Signal : BOOL;
+END_VAR
+
+VAR_OUTPUT
+    OK : BOOL;		// when signal equal to TRUE.
+    Active: BOOL;	// = True when signal is FALSE
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </inputVars>
+                <outputVars>
+                  <variable name="OK">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> when signal equal to TRUE.</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="Active">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> = True when signal is FALSE</xhtml>
+                    </documentation>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK Emergency
+
+VAR_INPUT
+    Signal : BOOL;
+END_VAR
+
+VAR_OUTPUT
+    OK : BOOL;		// when signal equal to TRUE.
+    Active: BOOL;	// = True when signal is FALSE
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </outputVars>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">OK := Signal;
+Active := NOT Ok;</xhtml>
+                </ST>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK Emergency
+
+VAR_INPUT
+    Signal : BOOL;
+END_VAR
+
+VAR_OUTPUT
+    OK : BOOL;		// when signal equal to TRUE.
+    Active: BOOL;	// = True when signal is FALSE
+END_VAR</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>96a920d4-3a43-4332-b1dd-d2e05f2aaf73</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="AlarmSystem" pouType="functionBlock">
+              <interface>
+                <inputVars>
+                  <variable name="Reset">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK AlarmSystem
+VAR_INPUT
+    Reset       : BOOL;
+END_VAR
+VAR_OUTPUT
+    Active      : BOOL;                         // -&gt; HMI lamp
+    Count       : UINT;                         // -&gt; HMI
+    ActiveList  : ARRAY [1..20] OF UINT;        // -&gt; HMI list
+END_VAR
+VAR
+    Cond        : ARRAY [1..100] OF BOOL;
+    Latch       : ARRAY [1..100] OF BOOL;
+    ResetTrig   : R_TRIG;
+    BuzzerTon   : TON;
+    BuzzerLtc   : BOOL;
+    i           : UINT;
+    idx         : UINT;
+END_VAR
+
+
+</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </inputVars>
+                <outputVars>
+                  <variable name="Active">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> -&gt; HMI lamp</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="Count">
+                    <type>
+                      <UINT />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> -&gt; HMI</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="ActiveList">
+                    <type>
+                      <array>
+                        <dimension lower="1" upper="20" />
+                        <baseType>
+                          <UINT />
+                        </baseType>
+                      </array>
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> -&gt; HMI list</xhtml>
+                    </documentation>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK AlarmSystem
+VAR_INPUT
+    Reset       : BOOL;
+END_VAR
+VAR_OUTPUT
+    Active      : BOOL;                         // -&gt; HMI lamp
+    Count       : UINT;                         // -&gt; HMI
+    ActiveList  : ARRAY [1..20] OF UINT;        // -&gt; HMI list
+END_VAR
+VAR
+    Cond        : ARRAY [1..100] OF BOOL;
+    Latch       : ARRAY [1..100] OF BOOL;
+    ResetTrig   : R_TRIG;
+    BuzzerTon   : TON;
+    BuzzerLtc   : BOOL;
+    i           : UINT;
+    idx         : UINT;
+END_VAR
+
+
+</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </outputVars>
+                <localVars>
+                  <variable name="Cond">
+                    <type>
+                      <array>
+                        <dimension lower="1" upper="100" />
+                        <baseType>
+                          <BOOL />
+                        </baseType>
+                      </array>
+                    </type>
+                  </variable>
+                  <variable name="Latch">
+                    <type>
+                      <array>
+                        <dimension lower="1" upper="100" />
+                        <baseType>
+                          <BOOL />
+                        </baseType>
+                      </array>
+                    </type>
+                  </variable>
+                  <variable name="ResetTrig">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <variable name="BuzzerTon">
+                    <type>
+                      <derived name="TON" />
+                    </type>
+                  </variable>
+                  <variable name="BuzzerLtc">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="i">
+                    <type>
+                      <UINT />
+                    </type>
+                  </variable>
+                  <variable name="idx">
+                    <type>
+                      <UINT />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK AlarmSystem
+VAR_INPUT
+    Reset       : BOOL;
+END_VAR
+VAR_OUTPUT
+    Active      : BOOL;                         // -&gt; HMI lamp
+    Count       : UINT;                         // -&gt; HMI
+    ActiveList  : ARRAY [1..20] OF UINT;        // -&gt; HMI list
+END_VAR
+VAR
+    Cond        : ARRAY [1..100] OF BOOL;
+    Latch       : ARRAY [1..100] OF BOOL;
+    ResetTrig   : R_TRIG;
+    BuzzerTon   : TON;
+    BuzzerLtc   : BOOL;
+    i           : UINT;
+    idx         : UINT;
+END_VAR
+
+
+</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </localVars>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">// CALL LAST, AFTER ALL Chk() CALLS
+
+ResetTrig(CLK := Reset);
+
+Count := 0;
+idx   := 0;
+
+FOR i := 1 TO 100 DO
+
+    // reset clears only alarms whose condition is gone
+    IF ResetTrig.Q AND NOT Cond[i] THEN
+        Latch[i] := FALSE;
+    END_IF
+
+    IF Latch[i] THEN
+        Count := Count + 1;
+        IF idx &lt; 20 THEN
+            idx := idx + 1;
+            ActiveList[idx] := i;
+        END_IF
+    END_IF
+
+END_FOR
+
+FOR i := idx + 1 TO 20 DO
+    ActiveList[i] := 0;
+END_FOR
+
+Active := (Count &gt; 0);
+
+IF ResetTrig.Q THEN
+    BuzzerLtc := FALSE;
+END_IF
+
+BuzzerTon(IN := BuzzerLtc, PT := T#5S);
+
+IF BuzzerTon.Q THEN
+    BuzzerLtc := FALSE;
+END_IF</xhtml>
+                </ST>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                  <Method name="Chk" ObjectId="a4d777de-bc66-45a2-b82f-c35200e1f980">
+                    <interface>
+                      <inputVars>
+                        <variable name="ID">
+                          <type>
+                            <UINT />
+                          </type>
+                        </variable>
+                        <variable name="Alarm">
+                          <type>
+                            <BOOL />
+                          </type>
+                        </variable>
+                        <addData>
+                          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                            <InterfaceAsPlainText>
+                              <xhtml xmlns="http://www.w3.org/1999/xhtml">METHOD PUBLIC  Chk
+VAR_INPUT
+    ID      : UINT;
+    Alarm   : BOOL;
+END_VAR
+</xhtml>
+                            </InterfaceAsPlainText>
+                          </data>
+                        </addData>
+                      </inputVars>
+                    </interface>
+                    <body>
+                      <ST>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">IF (ID &lt; 1) OR (ID &gt; 100) THEN
+    RETURN;
+END_IF
+
+Cond[ID] := Alarm;
+
+IF Alarm AND NOT Latch[ID] THEN
+    Latch[ID] := TRUE;
+    BuzzerLtc := TRUE;
+END_IF</xhtml>
+                      </ST>
+                    </body>
+                    <InterfaceAsPlainText>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">METHOD PUBLIC  Chk
+VAR_INPUT
+    ID      : UINT;
+    Alarm   : BOOL;
+END_VAR
+</xhtml>
+                    </InterfaceAsPlainText>
+                    <addData />
+                  </Method>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK AlarmSystem
+VAR_INPUT
+    Reset       : BOOL;
+END_VAR
+VAR_OUTPUT
+    Active      : BOOL;                         // -&gt; HMI lamp
+    Count       : UINT;                         // -&gt; HMI
+    ActiveList  : ARRAY [1..20] OF UINT;        // -&gt; HMI list
+END_VAR
+VAR
+    Cond        : ARRAY [1..100] OF BOOL;
+    Latch       : ARRAY [1..100] OF BOOL;
+    ResetTrig   : R_TRIG;
+    BuzzerTon   : TON;
+    BuzzerLtc   : BOOL;
+    i           : UINT;
+    idx         : UINT;
+END_VAR
+
+
+</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>4bce77f8-c801-48d0-882b-22e6b0723cb9</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="DateTime" pouType="program">
+              <interface>
+                <localVars>
+                  <variable name="RTCget">
+                    <type>
+                      <DWORD />
+                    </type>
+                  </variable>
+                  <variable name="SetTime">
+                    <type>
+                      <DWORD />
+                    </type>
+                  </variable>
+                  <variable name="pRes">
+                    <type>
+                      <derived name="SysTimeRtc.RTS_IEC_RESULT" />
+                    </type>
+                  </variable>
+                  <variable name="TimeLoaded">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM DateTime
+VAR
+    RTCget      : DWORD;
+    SetTime     : DWORD;
+    pRes        : SysTimeRtc.RTS_IEC_RESULT;
+    TimeLoaded  : BOOL;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </localVars>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">// ---------- READ RTC ----------
+SysTimeRtc.SysTimeRtcConvertUtcToDate(dwTimestampUtc := RTCget, pDate := Clock.Act);
+SysTimeRtc.SysTimeRtcGet(pResult := pRes, SysTimeRtcGet =&gt; RTCget);
+
+// ---------- LOAD CURRENT TIME INTO EDIT FIELDS ----------
+IF TimeRead THEN
+    Clock.Set  := Clock.Act;
+    TimeRead   := FALSE;
+    TimeLoaded := TRUE;
+END_IF
+
+// ---------- WRITE RTC ----------
+IF TimeWrite AND TimeLoaded THEN
+    SysTimeRtc.SysTimeRtcConvertDateToUtc(pDate := Clock.Set, pdwTimestampUtc := SetTime);
+    SysTimeRtc.SysTimeRtcSet(ulTimestamp := SetTime);
+    TimeWrite  := FALSE;
+    TimeLoaded := FALSE;
+END_IF</xhtml>
+                </ST>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM DateTime
+VAR
+    RTCget      : DWORD;
+    SetTime     : DWORD;
+    pRes        : SysTimeRtc.RTS_IEC_RESULT;
+    TimeLoaded  : BOOL;
+END_VAR</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>20fa988e-7366-46e3-8a8f-562badc66778</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="Main" pouType="program">
+              <interface>
+                <localVars>
+                  <variable name="startButton">
+                    <type>
+                      <derived name="Button" />
+                    </type>
+                  </variable>
+                  <variable name="stopButton">
+                    <type>
+                      <derived name="Button" />
+                    </type>
+                  </variable>
+                  <variable name="reset">
+                    <type>
+                      <derived name="Emergency" />
+                    </type>
+                  </variable>
+                  <variable name="emergencyStop">
+                    <type>
+                      <derived name="Emergency" />
+                    </type>
+                  </variable>
+                  <variable name="MasterPower">
+                    <type>
+                      <derived name="PLCO.MC_Power" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> ---------- MASTER ----------</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="MasterHome">
+                    <type>
+                      <derived name="PLCO.MC_Home" />
+                    </type>
+                  </variable>
+                  <variable name="MasterRun">
+                    <type>
+                      <derived name="PLCO.MC_MoveVelocity" />
+                    </type>
+                  </variable>
+                  <variable name="MasterStop">
+                    <type>
+                      <derived name="PLCO.MC_Stop" />
+                    </type>
+                  </variable>
+                  <variable name="M1Power">
+                    <type>
+                      <derived name="PLCO.MC_Power" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> ---------- MOTOR 1 ----------</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="M1Home">
+                    <type>
+                      <derived name="PLCO.MC_Home" />
+                    </type>
+                  </variable>
+                  <variable name="M1Reset">
+                    <type>
+                      <derived name="PLCO.MC_Reset" />
+                    </type>
+                  </variable>
+                  <variable name="M1GearIn">
+                    <type>
+                      <derived name="PLCO.MC_GearIn" />
+                    </type>
+                  </variable>
+                  <variable name="M1Run">
+                    <type>
+                      <derived name="PLCO.MC_MoveVelocity" />
+                    </type>
+                  </variable>
+                  <variable name="M1Stop">
+                    <type>
+                      <derived name="PLCO.MC_Stop" />
+                    </type>
+                  </variable>
+                  <variable name="M2Power">
+                    <type>
+                      <derived name="PLCO.MC_Power" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> ---------- MOTOR 2 ----------</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="M2Home">
+                    <type>
+                      <derived name="PLCO.MC_Home" />
+                    </type>
+                  </variable>
+                  <variable name="M2Reset">
+                    <type>
+                      <derived name="PLCO.MC_Reset" />
+                    </type>
+                  </variable>
+                  <variable name="M2GearIn">
+                    <type>
+                      <derived name="PLCO.MC_GearIn" />
+                    </type>
+                  </variable>
+                  <variable name="Motor1Speed">
+                    <type>
+                      <LREAL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="50.0" />
+                    </initialValue>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> deg/s   &lt;- HMI</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="Motor1Accel">
+                    <type>
+                      <LREAL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="200.0" />
+                    </initialValue>
+                  </variable>
+                  <variable name="Motor1Decel">
+                    <type>
+                      <LREAL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="200.0" />
+                    </initialValue>
+                  </variable>
+                  <variable name="Motor1Pos">
+                    <type>
+                      <LREAL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> -&gt; HMI</xhtml>
+                    </documentation>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM Main
+VAR
+	startButton		:	Button;
+	stopButton		:	Button;
+	reset		:	Emergency;
+	emergencyStop	:	Emergency;
+	
+	
+    // ---------- MASTER ----------
+    MasterPower     : PLCO.MC_Power;
+    MasterHome      : PLCO.MC_Home;
+    MasterRun       : PLCO.MC_MoveVelocity;
+    MasterStop      : PLCO.MC_Stop;
+
+    // ---------- MOTOR 1 ----------
+    M1Power         : PLCO.MC_Power;
+    M1Home          : PLCO.MC_Home;
+    M1Reset         : PLCO.MC_Reset;
+    M1GearIn        : PLCO.MC_GearIn;
+    M1Run           : PLCO.MC_MoveVelocity;
+    M1Stop          : PLCO.MC_Stop;
+
+    // ---------- MOTOR 2 ----------
+    M2Power         : PLCO.MC_Power;
+    M2Home          : PLCO.MC_Home;
+    M2Reset         : PLCO.MC_Reset;
+    M2GearIn        : PLCO.MC_GearIn;
+	
+	  // ---------- SETTINGS ----------
+    Motor1Speed : LREAL := 50.0;    // deg/s   &lt;- HMI
+    Motor1Accel : LREAL := 200.0;
+    Motor1Decel : LREAL := 200.0;
+
+    // ---------- STATUS ----------
+    Motor1Pos   : LREAL;            // -&gt; HMI
+END_VAR
+</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </localVars>
+              </interface>
+              <actions>
+                <action name="Run_Manual">
+                  <body>
+                    <ST>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml" />
+                    </ST>
+                  </body>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                      <ObjectId>aebafcf1-09a0-488a-a6ab-e3a6dd75b5c3</ObjectId>
+                    </data>
+                  </addData>
+                </action>
+                <action name="_01_DefineButtons">
+                  <body>
+                    <ST>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">// Define Elements.
+
+startButton(
+	signal	:=	StartButton_In // start button OR from HMI or start button2 ... NO
+);
+
+stopButton(
+	signal	:=	StopButton_In 	// stop button OR HMI or stop button2 ... NO
+);
+
+emergencyStop(
+	Signal	:=	Emergency_In	// button1 AND button2 AND button3 NC
+);
+
+reset(
+	signal := ResetButton_In	// from FSR .. normal Close NC.
+);	
+</xhtml>
+                    </ST>
+                  </body>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                      <ObjectId>a0019f72-9e9e-427b-96f8-9e10f00e5e74</ObjectId>
+                    </data>
+                  </addData>
+                </action>
+                <action name="_02_DefineAlarms">
+                  <body>
+                    <ST>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">Alarms.Chk(  1, emergencyStop.Active          );  // Emergency Stop
+
+// 100 .. System logic 
+
+// 200 .. Sensors
+
+// 400 .. &gt; 499 Motors Drivers
+Alarms.Chk( 41, (DRV1.Axis.etAxisState = 0)     );  // Motor 1 Fault
+
+// ---- RUN  ----
+Alarms( Reset := reset.Active );</xhtml>
+                    </ST>
+                  </body>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                      <ObjectId>d2fde022-8517-4267-acef-42a9a3f2ea18</ObjectId>
+                    </data>
+                  </addData>
+                </action>
+                <action name="_03_MachineControl">
+                  <body>
+                    <ST>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">Machine.Ready    := Machine.SafetyOk
+                    AND Machine.BusOk
+                    AND Machine.PowerOk
+                    AND Machine.HomeOk
+                    AND Machine.AxisOk
+                    AND NOT Alarms.Active;
+
+Machine.ResetRequest	:= Alarms.Active OR reset.Active;
+// must be later in FB for machine status so its auto do this.. Machine.StopRequest		:= 
+IF IS_DEBUG THEN
+	Machine.Ready := TRUE;
+	Machine.Running:= TRUE;
+	
+	AutoMode_Sw :=TRUE;
+	
+	StartButton_In :=TRUE;
+	Emergency_In:= TRUE;
+	StopButton_In :=FALSE;
+	ResetButton_In :=TRUE;
+END_IF
+
+// ---------- MODE ----------
+Machine.ManualMode := ManualMode_Sw;
+Machine.AutoMode := AutoMode_Sw  AND NOT Machine.ManualMode;
+
+
+// ---------- START / STOP ----------
+IF StartButton.Pressed AND Machine.Ready AND (Machine.AutoMode OR Machine.ManualMode) THEN
+    Machine.Running := TRUE;
+END_IF
+
+IF StopButton.Pressed OR NOT Machine.Ready THEN
+    Machine.Running := FALSE;
+END_IF
+
+// ---------- Lamps ----------
+AlarmLamp_Out 	:= Alarms.Active;
+RunLamp_Out  	:= Machine.Running;
+ReadyLamp_Out	:= Machine.Ready AND NOT Machine.Running;
+
+
+// -------------- Call Methods -----------
+IF Machine.AutoMode AND Machine.Running THEN
+    Main.Run_Automatic();
+END_IF
+
+IF Machine.ManualMode AND Machine.Running THEN
+    Main.Run_Manual();
+END_IF
+</xhtml>
+                    </ST>
+                  </body>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                      <ObjectId>3f3c515e-e687-4ce1-961d-08988510ae4e</ObjectId>
+                    </data>
+                  </addData>
+                </action>
+                <action name="Run_Automatic">
+                  <body>
+                    <ST>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml" />
+                    </ST>
+                  </body>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                      <ObjectId>82e673d5-53e5-41ff-a44e-96e3c6b460b2</ObjectId>
+                    </data>
+                  </addData>
+                </action>
+              </actions>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">// --------- CHECK StATUS -----
+Machine.AxisOk		:= (DRV1.Axis.etAxisState &lt;&gt; 0);
+Machine.BusOk		:= TRUE;
+Machine.HomeOk		:= TRUE;
+Machine.PowerOk		:= TRUE;
+Machine.SafetyOk	:= TRUE;
+
+
+///========= MOTORS =================
+// ---------- RESET ----------
+M1Reset( Axis    := DRV1.Axis,
+         Execute := Machine.ResetRequest	);
+
+// ---------- POWER ----------
+M1Power( Axis   := DRV1.Axis,
+         Enable := Machine.Power );
+
+Machine.PowerOk := M1Power.Status;
+
+// ---------- RUN ----------
+M1Run( Axis         := DRV1.Axis,
+       Execute      := Machine.Running,
+       Velocity     := Motor1Speed,
+       Acceleration := Motor1Accel,
+       Deceleration := Motor1Decel );
+
+// ---------- STOP ----------
+M1Stop( Axis         := DRV1.Axis,
+        Execute      := NOT Machine.Running,
+        Deceleration := Motor1Decel );
+
+// ---------- STATUS ----------
+Motor1Pos := DRV1.Axis.lrPosition;
+</xhtml>
+                </ST>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM Main
+VAR
+	startButton		:	Button;
+	stopButton		:	Button;
+	reset		:	Emergency;
+	emergencyStop	:	Emergency;
+	
+	
+    // ---------- MASTER ----------
+    MasterPower     : PLCO.MC_Power;
+    MasterHome      : PLCO.MC_Home;
+    MasterRun       : PLCO.MC_MoveVelocity;
+    MasterStop      : PLCO.MC_Stop;
+
+    // ---------- MOTOR 1 ----------
+    M1Power         : PLCO.MC_Power;
+    M1Home          : PLCO.MC_Home;
+    M1Reset         : PLCO.MC_Reset;
+    M1GearIn        : PLCO.MC_GearIn;
+    M1Run           : PLCO.MC_MoveVelocity;
+    M1Stop          : PLCO.MC_Stop;
+
+    // ---------- MOTOR 2 ----------
+    M2Power         : PLCO.MC_Power;
+    M2Home          : PLCO.MC_Home;
+    M2Reset         : PLCO.MC_Reset;
+    M2GearIn        : PLCO.MC_GearIn;
+	
+	  // ---------- SETTINGS ----------
+    Motor1Speed : LREAL := 50.0;    // deg/s   &lt;- HMI
+    Motor1Accel : LREAL := 200.0;
+    Motor1Decel : LREAL := 200.0;
+
+    // ---------- STATUS ----------
+    Motor1Pos   : LREAL;            // -&gt; HMI
+END_VAR
+</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>06ce4fe2-49e2-416d-b080-47ce0653c1a7</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/libraries" handleUnknown="implementation">
+            <Libraries>
+              <Library Name="#IoStandard" Namespace="IoStandard" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="true" DefaultResolution="IoStandard, 3.5.17.0 (System)" />
+              <Library Name="#Standard" Namespace="Standard" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="Standard, 3.5.18.0 (System)" />
+              <Library Name="#Util" Namespace="Util" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="Util, 3.5.21.0 (System)" />
+              <Library Name="#SE_PLCSystem" Namespace="SEC" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="M262 PLCSystem, 1.0.2.2 (Schneider Electric)" />
+              <Library Name="Diagnostic Device Support, 1.0.5.0 (Schneider Electric)" Namespace="SEC_DIAG_DEVS" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" />
+              <Library Name="#SE_PLCCommunication" Namespace="SEN" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="PLCCommunication, 1.0.5.5 (Schneider Electric)" />
+              <Library Name="#SE_RelocationTable" Namespace="SEC_RELOC" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="Relocation Table, 1.0.3.0 (Schneider Electric)" />
+              <Library Name="#DeviceAbstractionLayer" Namespace="DAL" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="DeviceAbstractionLayer, 2.16.1.0 (Schneider Electric)" />
+              <Library Name="#DeviceIntegrationCommon" Namespace="DIC" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="DeviceIntegrationCommon, 2.4.6.0 (Schneider Electric)" />
+              <Library Name="#M262MotionExtension" Namespace="M262_ME" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="M262MotionExtension, 2.1.9.0 (Schneider Electric)" />
+              <Library Name="#UserFunctionsBase" Namespace="UFB" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="UserFunctionsBase, 2.2.1.0 (Schneider Electric)" />
+              <Library Name="#MotionInterface" Namespace="MOIN" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="MotionInterface, 2.36.5.0 (Schneider Electric)" />
+              <Library Name="#TM3System" Namespace="SEC_TM3SYS" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="TM3System, 1.0.2.2 (Schneider Electric)" />
+              <Library Name="#TMSSystem" Namespace="TMS" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="TMSSystem, 1.0.2.1 (Schneider Electric)" />
+              <Library Name="#SerialLineSystem" Namespace="SEC_SLSYS" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="SerialLineSystem, 1.0.2.1 (Schneider Electric)" />
+              <Library Name="#BreakpointLogging" Namespace="BPLog" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="Breakpoint Logging Functions, * (3S - Smart Software Solutions GmbH)" />
+              <Library Name="#SysTimeRtc" Namespace="SysTimeRtc" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="false" LinkAllContent="false" DefaultResolution="SysTimeRtc, * (System)" />
+              <Library Name="#DeviceIntegrationSercos" Namespace="DIS" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="DeviceIntegrationSercos, 2.1.8.0 (Schneider Electric)" />
+              <Library Name="#DeviceMotionFunctionsInterface" Namespace="DMFI" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="DeviceMotionFunctionsInterface, 2.6.0.0 (Schneider Electric)" />
+              <Library Name="#DeviceIntegrationAxis" Namespace="DIA" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="DeviceIntegrationAxis, 2.6.2.0 (Schneider Electric)" />
+              <Library Name="#DeviceIntegrationMotion" Namespace="DIM" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="DeviceIntegrationMotion, 2.8.2.0 (Schneider Electric)" />
+              <Library Name="#LXM32SDevice" Namespace="LXM32SD" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="LXM32SDevice, 2.4.10.0 (Schneider Electric)" />
+              <Library Name="#DeviceMotionFunctions" Namespace="DMF" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="DeviceMotionFunctions, 2.3.2.0 (Schneider Electric)" />
+              <Library Name="PLCopen MC part 1, 2.30.1.0 (Schneider Electric)" Namespace="PLCO" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" />
+              <Library Name="#SercosMasterDevice" Namespace="SMD" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="SercosMasterDevice, 2.1.3.0 (Schneider Electric)" />
+              <Library Name="#IoDrvIoBusTm3" Namespace="IoDrvIoBusTM3" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="IoDrvIoBusTM3, 1.2.1.1 (Schneider Electric)" />
+              <PlaceholderRedirections>
+                <PlaceholderRedirection Placeholder="System_VisuElemXYChart" Redirection="VisuElemXYChart, 4.8.0.0 (System)" />
+                <PlaceholderRedirection Placeholder="System_VisuElemTextEditor" Redirection="VisuElemTextEditor, 4.8.0.0 (System)" />
+                <PlaceholderRedirection Placeholder="Standard" Redirection="Standard, 3.5.18.0 (System)" />
+                <PlaceholderRedirection Placeholder="System_VisuElemMeter" Redirection="VisuElemMeter, 4.9.0.0 (System)" />
+                <PlaceholderRedirection Placeholder="System_VisuElemsSpecialControls" Redirection="VisuElemsSpecialControls, 4.7.0.0 (System)" />
+                <PlaceholderRedirection Placeholder="System_VisuNativeControl" Redirection="VisuNativeControl, 4.9.0.0 (System)" />
+                <PlaceholderRedirection Placeholder="System_VisuElemTrace" Redirection="VisuElemTrace, 4.9.0.0 (System)" />
+                <PlaceholderRedirection Placeholder="System_VisuElem3DPath" Redirection="VisuElem3DPath, 4.7.0.0 (System)" />
+                <PlaceholderRedirection Placeholder="RSMUtility" Redirection="RSM Utility, 3.5.21.0 (CODESYS)" />
+                <PlaceholderRedirection Placeholder="System_VisuElemCamDisplayer" Redirection="VisuElemCamDisplayer, 4.7.0.0 (System)" />
+                <PlaceholderRedirection Placeholder="System_VisuElems" Redirection="VisuElems, 4.9.1.0 (System)" />
+                <PlaceholderRedirection Placeholder="System_VisuElemsDateTime" Redirection="VisuElemsDateTime, 4.9.0.0 (System)" />
+                <PlaceholderRedirection Placeholder="System_VisuElemsAlarm" Redirection="VisuElemsAlarm, 4.9.0.0 (System)" />
+                <PlaceholderRedirection Placeholder="System_VisuElemsWinControls" Redirection="VisuElemsWinControls, 4.9.0.0 (System)" />
+                <PlaceholderRedirection Placeholder="FloatingPointUtils" Redirection="FloatingPointUtils, 4.0.0.0 (System)" />
+                <PlaceholderRedirection Placeholder="System_VisuInputs" Redirection="VisuInputs, 4.7.0.0 (System)" />
+              </PlaceholderRedirections>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>61129198-38be-4514-810d-a20b4ee2d260</ObjectId>
+                </data>
+              </addData>
+            </Libraries>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>3be6c583-cb3c-499e-a7e1-bd8e7db388c6</ObjectId>
+          </data>
+        </addData>
+      </resource>
+    </data>
+    <data name="http://www.3s-software.com/plcopenxml/projectstructure" handleUnknown="discard">
+      <ProjectStructure>
+        <Object Name="Application" ObjectId="3be6c583-cb3c-499e-a7e1-bd8e7db388c6">
+          <Object Name="GVL_IO" ObjectId="2db6a205-aca8-494a-bd3e-b43a3bd5355f" />
+          <Object Name="MAST" ObjectId="7688d58b-1ded-4d69-9377-67c912740fa7" />
+          <Object Name="Library Manager" ObjectId="61129198-38be-4514-810d-a20b4ee2d260" />
+          <Object Name="SR_Main" ObjectId="c2204bf7-cece-49f1-bedd-18c4f10c0357" />
+          <Folder Name="Kur">
+            <Folder Name="01_DataTypes">
+              <Object Name="Button" ObjectId="7cb82e55-98e1-46ed-ad94-f4039b415cdd" />
+              <Object Name="Emergency" ObjectId="96a920d4-3a43-4332-b1dd-d2e05f2aaf73" />
+              <Object Name="AlarmSystem" ObjectId="4bce77f8-c801-48d0-882b-22e6b0723cb9">
+                <Object Name="Chk" ObjectId="a4d777de-bc66-45a2-b82f-c35200e1f980" />
+              </Object>
+              <Object Name="DateTime" ObjectId="20fa988e-7366-46e3-8a8f-562badc66778" />
+              <Object Name="TimeData" ObjectId="dbaef4ad-4e24-48c5-acde-bc5817a804c4" />
+              <Object Name="MachineStatus" ObjectId="18996c06-7400-4a57-9915-b37ba9fb1618" />
+            </Folder>
+            <Folder Name="Documents">
+              <Object Name="hmi_table" ObjectId="49aa2bbf-06c1-46a8-a83f-0e6543e2a3f0" />
+            </Folder>
+            <Object Name="GVL_System" ObjectId="d533771d-ee17-48b7-9ef2-bdcf79c0baee" />
+          </Folder>
+          <Object Name="GVL_Recipe" ObjectId="b585f6bb-018b-4ec6-bac6-8267a70fe936" />
+          <Object Name="Main" ObjectId="06ce4fe2-49e2-416d-b080-47ce0653c1a7">
+            <Object Name="Run_Manual" ObjectId="aebafcf1-09a0-488a-a6ab-e3a6dd75b5c3" />
+            <Object Name="_01_DefineButtons" ObjectId="a0019f72-9e9e-427b-96f8-9e10f00e5e74" />
+            <Object Name="_02_DefineAlarms" ObjectId="d2fde022-8517-4267-acef-42a9a3f2ea18" />
+            <Object Name="_03_MachineControl" ObjectId="3f3c515e-e687-4ce1-961d-08988510ae4e" />
+            <Object Name="Run_Automatic" ObjectId="82e673d5-53e5-41ff-a44e-96e3c6b460b2" />
+          </Object>
+        </Object>
+      </ProjectStructure>
+    </data>
+  </addData>
+</project>

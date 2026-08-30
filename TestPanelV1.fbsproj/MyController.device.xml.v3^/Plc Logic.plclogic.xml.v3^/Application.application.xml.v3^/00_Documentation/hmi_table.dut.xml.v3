@@ -1,0 +1,66 @@
+__METADATA__
+{
+  "v3Meta": {
+    "objectGuid": "49aa2bbf-06c1-46a8-a83f-0e6543e2a3f0",
+    "objectTypeGuid": "2db5746d-d284-4425-9f7f-2663a34b0ebc",
+    "embeddedObjectTypeGuids": [
+      "a9ed5b7e-75c5-4651-af16-d2c27e98cb94"
+    ],
+    "properties": {},
+    "subObjects": {}
+  }
+}
+__DECLARATION__
+(*
+========================================
+  HMI VARIABLE LIST
+========================================
+
+--- READ ---
+Machine.Ready
+Machine.Running
+Machine.SafetyOk
+Machine.PowerOk
+Machine.HomeOk
+
+Alarms.Active
+Alarms.Count
+Alarms.ActiveList[1..20]
+
+Clock.Act.wDay
+Clock.Act.wMonth
+Clock.Act.wYear
+Clock.Act.wHour
+Clock.Act.wMinute
+Clock.Act.wSecond
+
+
+--- WRITE ---
+Machine.Auto
+Machine.Power
+Machine.Home
+
+Clock.Set.wDay
+Clock.Set.wMonth
+Clock.Set.wYear
+Clock.Set.wHour
+Clock.Set.wMinute
+Clock.Set.wSecond
+
+TimeRead        // button "Load"
+TimeWrite       // button "Apply"
+
+
+========================================
+  TIME CHANGE
+========================================
+1. press "Load"     -> Clock.Set = Clock.Act
+2. edit Clock.Set fields
+3. press "Apply"    -> written to RTC
+
+*)
+// TimeDate is not DateTime becouse its in usage.
+TYPE HMI_TABLE :
+STRUCT
+END_STRUCT
+END_TYPE

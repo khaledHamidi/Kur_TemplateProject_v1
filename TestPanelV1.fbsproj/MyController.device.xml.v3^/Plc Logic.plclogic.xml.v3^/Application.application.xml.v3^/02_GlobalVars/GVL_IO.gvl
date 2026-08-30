@@ -1,0 +1,42 @@
+__METADATA__
+{
+  "v3Meta": {
+    "objectGuid": "2db6a205-aca8-494a-bd3e-b43a3bd5355f",
+    "objectTypeGuid": "ffbfa93a-b94d-45fc-a329-229860183b1d",
+    "embeddedObjectTypeGuids": [
+      "a9ed5b7e-75c5-4651-af16-d2c27e98cb94"
+    ],
+    "properties": {},
+    "subObjects": {}
+  }
+}
+__DECLARATION__
+VAR_GLOBAL
+	
+    // ---------- DIGITAL INPUTS ----------
+	(* Buttons *)
+    StartButton_In      : BOOL		:= TRUE;
+    StopButton_In       : BOOL;
+    ResetButton_In      : BOOL		:= TRUE;
+    Emergency_In        : BOOL		:= TRUE;     // NC contact -> TRUE = OK
+	
+	(* Switchs *)
+	ManualMode_Sw		: BOOL;
+	AutoMode_Sw			: BOOL		:= TRUE;
+
+    // ---------- DIGITAL OUTPUTS ----------
+    (* Lamp *)
+	RunLamp_Out       	: BOOL;
+	ReadyLamp_Out		: BOOL;
+    AlarmLamp_Out       : BOOL;
+
+
+    // ---------- VIRTUAL MASTER ----------
+    MasterAxis  : MOIN.FB_ControlledAxis;
+
+    // ---------- REAL AXES ----------
+    MainChain   : MOIN.FB_ControlledAxis;   // DRV1
+    Conveyor    : MOIN.FB_ControlledAxis;   // DRV2
+    CutterAxis  : MOIN.FB_ControlledAxis;   // DRV3
+
+END_VAR

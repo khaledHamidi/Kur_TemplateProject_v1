@@ -1,0 +1,34 @@
+__METADATA__
+{
+  "v3Meta": {
+    "objectGuid": "18996c06-7400-4a57-9915-b37ba9fb1618",
+    "objectTypeGuid": "2db5746d-d284-4425-9f7f-2663a34b0ebc",
+    "embeddedObjectTypeGuids": [
+      "a9ed5b7e-75c5-4651-af16-d2c27e98cb94"
+    ],
+    "properties": {},
+    "subObjects": {}
+  }
+}
+__DECLARATION__
+TYPE MachineStatus :
+STRUCT
+    // ---- COMMAND : HMI writes ----
+    Power       : BOOL;     // is power OK
+    Home        : BOOL;     // is home
+    ManualMode      : BOOL;     // NOT Auto
+	AutoMode        : BOOL;     // auto / manual selector
+
+	ResetRequest	:BOOL;	// true if reset requert
+	StopRequest		:BOOL; 
+    // ---- STATUS : PLC writes ----
+    SafetyOk    : BOOL;     // emergency + doors
+    BusOk       : BOOL;     // fieldbus ready
+    PowerOk     : BOOL;     // all drives powered
+    HomeOk      : BOOL;     // all axes homed
+    AxisOk      : BOOL;     // all axes no error
+    Ready       : BOOL;     // all above + no alarm
+
+    Running     : BOOL;     // machine running
+END_STRUCT
+END_TYPE
